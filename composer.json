@@ -1,6 +1,7 @@
 {
     "name": "screensnap/screen-snap",
     "description": "This is my package screen-snap",
+    "version": "1.0.0",
     "keywords": [
         "screen-snap",
         "laravel",
