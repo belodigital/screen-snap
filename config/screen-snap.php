@@ -29,6 +29,19 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | ScreenSnap Data File
+    |--------------------------------------------------------------------------
+    |
+    | The path to the JSON file containing the data to be used for capturing
+    | screenshots. This file should contain an array of URLs to capture with
+    | the proper structure (read the documentation).
+    | Example: '/path/to/data.json'
+    |
+    */
+    'screensnap_data_file' => env('SCREENSNAP_DATA_FILE', null),
+
+    /*
+    |--------------------------------------------------------------------------
     | Login URL
     |--------------------------------------------------------------------------
     |
