@@ -8,6 +8,13 @@ use ScreenSnap\ScreenSnap\Commands\ScreenSnapCommand;
 
 class ScreenSnapServiceProvider extends PackageServiceProvider
 {
+    public function boot()
+    {
+        $this->publishes([
+            __DIR__.'/../assets/js/script-test.js' => public_path('js/script-test.js'),
+        ], 'public');
+    }
+
     public function configurePackage(Package $package): void
     {
         /*
