@@ -175,31 +175,31 @@ php artisan screen-snap:take
   - **click**: This action is used to simulate clicking on a button, link, or any other clickable element. It requires only a `selector`.
   - **fillField**: This action is used to fill an input field with a specific value, such as a text field or email input. It requires both a `selector` and a `value`.
 
-#### Example for click:
+  #### Example for click:
 
-```json
-  [{"selector": "#login-button", "action": "click"}]
-```
+  ```json
+    [{"selector": "#login-button", "action": "click"}]
+  ```
 
-This example performs a click action on the element with the CSS selector #login-button.
+  This example performs a click action on the element with the CSS selector #login-button.
 
-#### Example for fillField:
+  #### Example for fillField:
 
-```json
-  [{"selector": "#email", "action": "fillField", "value": "user@example.com"}]
-```
+  ```json
+    [{"selector": "#email", "action": "fillField", "value": "user@example.com"}]
+  ```
 
-This example fills the input field with the CSS selector #email with the value "user@example.com".
+  This example fills the input field with the CSS selector #email with the value "user@example.com".
 
-#### Example with multiple actions:
+  #### Example with multiple actions:
 
-You can chain multiple actions together. For example, clicking a button and then filling a field:
+  You can chain multiple actions together. For example, clicking a button and then filling a field:
 
-```json
-  [{"selector": "#login-button", "action": "click"}, {"selector": "#email", "action": "fillField", "value": "user@example.com"}]
-```
+  ```json
+    [{"selector": "#login-button", "action": "click"}, {"selector": "#email", "action": "fillField", "value": "user@example.com"}]
+  ```
 
-In this example, it first clicks the #login-button and then fills the #email input field with the value "user@example.com".
+  In this example, it first clicks the #login-button and then fills the #email input field with the value "user@example.com".
 
 - `--data=`: (Batch mode) The path to a JSON file or a raw JSON string that contains multiple URLs to capture screenshots from.
 
