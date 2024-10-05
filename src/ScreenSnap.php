@@ -1,5 +1,5 @@
 <?php
 
-namespace ScreenSnap\ScreenSnap;
+namespace ScreenSnap;
 
 class ScreenSnap {}

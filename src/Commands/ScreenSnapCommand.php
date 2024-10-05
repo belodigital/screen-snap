@@ -1,6 +1,6 @@
 <?php
 
-namespace ScreenSnap\ScreenSnap\Commands;
+namespace ScreenSnap\Commands;
 
 use Illuminate\Console\Command;
 

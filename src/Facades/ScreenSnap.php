@@ -1,16 +1,16 @@
 <?php
 
-namespace ScreenSnap\ScreenSnap\Facades;
+namespace ScreenSnap\Facades;
 
 use Illuminate\Support\Facades\Facade;
 
 /**
- * @see \ScreenSnap\ScreenSnap\ScreenSnap
+ * @see \ScreenSnap\ScreenSnap
  */
 class ScreenSnap extends Facade
 {
     protected static function getFacadeAccessor(): string
     {
-        return \ScreenSnap\ScreenSnap\ScreenSnap::class;
+        return \ScreenSnap\ScreenSnap::class;
     }
 }

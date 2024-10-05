@@ -1,10 +1,10 @@
 <?php
 
-namespace ScreenSnap\ScreenSnap;
+namespace ScreenSnap;
 
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
-use ScreenSnap\ScreenSnap\Commands\ScreenSnapCommand;
+use ScreenSnap\Commands\ScreenSnapCommand;
 
 class ScreenSnapServiceProvider extends PackageServiceProvider
 {

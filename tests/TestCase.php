@@ -1,10 +1,10 @@
 <?php
 
-namespace ScreenSnap\ScreenSnap\Tests;
+namespace ScreenSnap\Tests;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Orchestra\Testbench\TestCase as Orchestra;
-use ScreenSnap\ScreenSnap\ScreenSnapServiceProvider;
+use ScreenSnap\ScreenSnapServiceProvider;
 
 class TestCase extends Orchestra
 {
