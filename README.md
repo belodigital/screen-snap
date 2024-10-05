@@ -172,11 +172,11 @@ php artisan screen-snap:take
 
 - `--stepsToReproduce=`: (Single mode) A JSON string that describes steps to perform on the page before capturing the screenshot (e.g., clicks). Example:
 
-  ```json
-  '[{"selector": "#login-button", "action": "click"}]'
-  ```
+```json
+  [{"selector": "#login-button", "action": "click"}]
+```
 
-  - `--data=`: (Batch mode) The path to a JSON file or a raw JSON string that contains multiple URLs to capture screenshots from.
+- `--data=`: (Batch mode) The path to a JSON file or a raw JSON string that contains multiple URLs to capture screenshots from.
 
 - `--loginUrl=`: URL to the login page of the application, if authentication is required before capturing screenshots.
 
@@ -195,8 +195,6 @@ php artisan screen-snap:take
 - `--screenshotWidth=`: The width of the screenshot to be captured. Default is the browser's viewport width.
 
 - `--screenshotHeight=`: The height of the screenshot to be captured. Default is the browser's viewport height.
-
----
 
 ### Examples
 
