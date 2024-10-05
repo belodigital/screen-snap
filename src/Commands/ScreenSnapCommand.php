@@ -127,7 +127,7 @@ class ScreenSnapCommand extends Command
     ): void {
 
         $command = sprintf(
-            'node ./.gitbook/screen-snap.js --url=%s --stepsToReproduce=%s --fileName=%s --savePath=%s --loginUrl=%s --loginUsername=%s --loginPassword=%s --loginUsernameFieldSelector=%s --loginPasswordFieldSelector=%s --loginSubmitButtonSelector=%s --pageNavigationTimeout=%s --screenshotWidth=%s --screenshotHeight=%s',
+            'node ../../assets/js/screen-snap-script.js --url=%s --stepsToReproduce=%s --fileName=%s --savePath=%s --loginUrl=%s --loginUsername=%s --loginPassword=%s --loginUsernameFieldSelector=%s --loginPasswordFieldSelector=%s --loginSubmitButtonSelector=%s --pageNavigationTimeout=%s --screenshotWidth=%s --screenshotHeight=%s',
             escapeshellarg($url),
             escapeshellarg($stepsToReproduce),
             escapeshellarg($fileName),
@@ -174,7 +174,7 @@ class ScreenSnapCommand extends Command
 
         // Prepare the Node.js command with or without the savePath
         $command = sprintf(
-            'node ./.gitbook/screen-snap.js --data=%s --savePath=%s --loginUrl=%s --loginUsername=%s --loginPassword=%s --loginUsernameFieldSelector=%s --loginPasswordFieldSelector=%s --loginSubmitButtonSelector=%s --pageNavigationTimeout=%s --screenshotWidth=%s --screenshotHeight=%s',
+            'node ../../assets/js/screen-snap-script.js --data=%s --savePath=%s --loginUrl=%s --loginUsername=%s --loginPassword=%s --loginUsernameFieldSelector=%s --loginPasswordFieldSelector=%s --loginSubmitButtonSelector=%s --pageNavigationTimeout=%s --screenshotWidth=%s --screenshotHeight=%s',
             escapeshellarg($encodedData),
             escapeshellarg($savePath),
             escapeshellarg($loginUrl),
