@@ -12,7 +12,7 @@ class ScreenSnapServiceProvider extends PackageServiceProvider
     {
         $this->publishes([
             __DIR__.'/../assets/js/script-test.js' => public_path('/vendor/screen-snap/js/script-test.js'),
-        ], 'screen-snap');
+        ], 'screen-snap-assets');
     }
 
     public function configurePackage(Package $package): void
