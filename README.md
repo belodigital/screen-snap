@@ -27,6 +27,17 @@ This is the contents of the published configuration file:
 ```php
 return [
 
+   /*
+   |--------------------------------------------------------------------------
+   | ScreenSnap Configuration
+   |--------------------------------------------------------------------------
+   |
+   | These values are used for configuring the behavior of screenshots
+   | taken by ScreenSnap. The save path, login URL, credentials,
+   | and form selectors are configurable here.
+   |
+   */
+
     /*
     |--------------------------------------------------------------------------
     | ScreenSnap Save Path
@@ -38,6 +49,19 @@ return [
     |
     */
     'screensnap_save_path' => env('SCREENSNAP_SAVE_PATH', public_path() . '/images/screensnap'),
+
+    /*
+    |--------------------------------------------------------------------------
+    | ScreenSnap Data File
+    |--------------------------------------------------------------------------
+    |
+    | The path to the JSON file containing the data to be used for capturing
+    | screenshots. This file should contain an array of URLs to capture with
+    | the proper structure (read the documentation).
+    | Example: '/path/to/data.json'
+    |
+    */
+    'screensnap_data_file' => env('SCREENSNAP_DATA_FILE', null),
 
     /*
     |--------------------------------------------------------------------------
@@ -116,10 +140,135 @@ return [
 
 ## Usage
 
-```php
-$screenSnap = new ScreenSnap();
-echo $screenSnap->echoPhrase('Hello, ScreenSnap!');
+The **Screen Snap** package provides a command to automate the process of capturing screenshots in your Laravel application. The command can be used to take a single screenshot or multiple screenshots in batch mode. Below are the available arguments and options for the `screen-snap:take` command.
+
+### Command Syntax
+
+```bash
+php artisan screen-snap:take
+    --savePath= : Optional path to save the screenshots. If not provided, the configuration default path will be used
+    --url= : URL to capture the screenshot, when capturing a single one
+    --fileName= : Name of the file where the screenshot will be saved, when capturing a single one
+    --stepsToReproduce= : JSON formatted string of steps to reproduce before taking the screenshot, when capturing a single one
+    --data= : JSON data or file path for batch screenshot capture
+    --loginUrl= : URL to the login page of the application
+    --loginUsername= : Username for login
+    --loginPassword= : Password for login
+    --loginUsernameFieldSelector= : CSS selector for the username field
+    --loginPasswordFieldSelector= : CSS selector for the password field
+    --loginSubmitButtonSelector= : CSS selector for the login submit button
+    --pageNavigationTimeout= : Optional timeout for page navigation
+    --screenshotWidth= : Width of the screenshot
+    --screenshotHeight= : Height of the screenshot
 ```
+
+### Command Options
+
+- `--savePath=`: Optional path where the screenshots will be saved. If not provided, the default path in the configuration file will be used.
+
+- `--url=`: (Single mode) The URL of the page to capture a screenshot from. This option enables single screenshot mode.
+
+- `--fileName=`: (Single mode) The name of the file to save the screenshot. Must be used with `--url`.
+
+- `--stepsToReproduce=`: (Single mode) A JSON string that describes steps to perform on the page before capturing the screenshot (e.g., clicks). Example:
+
+  ```json
+  '[{"selector": "#login-button", "action": "click"}]'
+  ```
+
+  - `--data=`: (Batch mode) The path to a JSON file or a raw JSON string that contains multiple URLs to capture screenshots from.
+
+- `--loginUrl=`: URL to the login page of the application, if authentication is required before capturing screenshots.
+
+- `--loginUsername=`: The username to use for logging in to the application.
+
+- `--loginPassword=`: The password for the username provided.
+
+- `--loginUsernameFieldSelector=`: The CSS selector for the username input field on the login form.
+
+- `--loginPasswordFieldSelector=`: The CSS selector for the password input field on the login form.
+
+- `--loginSubmitButtonSelector=`: The CSS selector for the login form's submit button.
+
+- `--pageNavigationTimeout=`: Optional timeout for navigating between pages. Useful if a page takes time to load.
+
+- `--screenshotWidth=`: The width of the screenshot to be captured. Default is the browser's viewport width.
+
+- `--screenshotHeight=`: The height of the screenshot to be captured. Default is the browser's viewport height.
+
+---
+
+### Examples
+
+#### 1. Capturing a Single Screenshot
+To capture a single screenshot of a specific URL and save it to a file:
+
+```bash
+php artisan screen-snap:take --url=https://example.com --fileName=homepage.png
+```
+
+The page at `https://example.com` is captured and saved as `homepage.png` in the default save path.
+
+#### 2. Capturing a Screenshot with Steps
+
+If you need to perform actions on the page (e.g., click a button) before capturing the screenshot, you can specify the steps using the `--stepsToReproduce` option:
+
+```bash
+php artisan screen-snap:take --url=https://example.com/login --fileName=login-page.png --stepsToReproduce='[{"selector":"#login-button", "action":"click"}]'
+```
+
+The page at `https://example.com/login` is loaded.  
+A click action is performed on the element with the CSS selector `#login-button` before capturing the screenshot and saving it as `login-page.png`.
+
+#### 3. Batch Screenshot Mode
+
+To capture multiple screenshots in batch mode using a JSON file or JSON data:
+
+```bash
+php artisan screen-snap:take --data=/path/to/urls.json
+```
+
+The `urls.json` file should be structured as follows:
+
+```json
+[
+  {
+    "url": "https://example.com/page1",
+    "fileName": "page1.png",
+    "stepsToReproduce": [{"selector":"#button1", "action":"click"}]
+  },
+  {
+    "url": "https://example.com/page2",
+    "fileName": "page2.png"
+  }
+]
+```
+
+The command captures screenshots of multiple URLs provided in the JSON file. Each page can include optional steps to reproduce before capturing the screenshot.
+
+#### 4. Capturing Screenshots with Login
+
+If the page requires authentication, you can specify login credentials and form field selectors:
+
+```bash
+php artisan screen-snap:take --url=https://example.com/dashboard --fileName=dashboard.png --loginUrl=https://example.com/login --loginUsername=admin --loginPassword=admin123 --loginUsernameFieldSelector="#email" --loginPasswordFieldSelector="#password" --loginSubmitButtonSelector="#submit"
+```
+
+The page at https://example.com/login is loaded.
+The username and password are entered in the respective fields (#email and #password), and the login form is submitted using the button with the selector #submit.
+After login, a screenshot of https://example.com/dashboard is captured and saved as dashboard.png.
+
+#### 5. Capturing Screenshots with Login
+
+To set custom dimensions for the screenshot, use the --screenshotWidth and --screenshotHeight options:
+
+```bash
+php artisan screen-snap:take --url=https://example.com --fileName=custom-size.png --screenshotWidth=1280 --screenshotHeight=720
+```
+
+The screenshot of https://example.com is captured with a width of 1280px and a height of 720px.
+
+By using the various options provided, you can easily capture both single and batch screenshots, with or without login, and customize the screenshot dimensions to fit your needs.
 
 ## Testing
 
