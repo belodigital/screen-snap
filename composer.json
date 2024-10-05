@@ -82,10 +82,10 @@
     "extra": {
         "laravel": {
             "providers": [
-                "ScreenSnap\\ScreenSnap\\ScreenSnapServiceProvider"
+                "ScreenSnap\\ScreenSnapServiceProvider"
             ],
             "aliases": {
-                "ScreenSnap": "ScreenSnap\\ScreenSnap\\Facades\\ScreenSnap"
+                "ScreenSnap": "ScreenSnap\\Facades\\ScreenSnap"
             }
         }
     },
