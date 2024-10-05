@@ -172,8 +172,8 @@ php artisan screen-snap:take
 
 - `--stepsToReproduce=`: (Single mode) A JSON string that describes steps to perform on the page before capturing the screenshot (e.g., clicks, filling forms). The available actions are:
 
-- **click**: Simulates a click action on the specified element. Requires a `selector`.
-- **fillField**: Fills an input field with a value. Requires both a `selector` for the field and the `value` to be entered.
+  - **click**: This action is used to simulate clicking on a button, link, or any other clickable element. It requires only a `selector`.
+  - **fillField**: This action is used to fill an input field with a specific value, such as a text field or email input. It requires both a `selector` and a `value`.
 
 #### Example for click:
 
@@ -200,10 +200,6 @@ You can chain multiple actions together. For example, clicking a button and then
 ```
 
 In this example, it first clicks the #login-button and then fills the #email input field with the value "user@example.com".
-
-#### Explanation:
-- **click**: This action is used to simulate clicking on a button, link, or any other clickable element. It requires only a `selector`.
-- **fillField**: This action is used to fill an input field with a specific value, such as a text field or email input. It requires both a `selector` and a `value`.
 
 - `--data=`: (Batch mode) The path to a JSON file or a raw JSON string that contains multiple URLs to capture screenshots from.
 
