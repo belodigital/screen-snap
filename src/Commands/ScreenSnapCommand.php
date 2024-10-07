@@ -127,9 +127,16 @@ class ScreenSnapCommand extends Command
         $screenshotWidth,
         $screenshotHeight
     ): void {
+        $screenSnapScriptPath = null;
+        try {
+            $screenSnapScriptPath = $this->getScreenSnapScriptPath();
+        } catch (Exception $e) {
+            echo 'Error: ' . $e->getMessage();
+        }
 
         $command = sprintf(
-            'node ../../assets/js/screen-snap-script.js --url=%s --stepsToReproduce=%s --fileName=%s --savePath=%s --loginUrl=%s --loginUsername=%s --loginPassword=%s --loginUsernameFieldSelector=%s --loginPasswordFieldSelector=%s --loginSubmitButtonSelector=%s --pageNavigationTimeout=%s --screenshotWidth=%s --screenshotHeight=%s',
+            'node %s --url=%s --stepsToReproduce=%s --fileName=%s --savePath=%s --loginUrl=%s --loginUsername=%s --loginPassword=%s --loginUsernameFieldSelector=%s --loginPasswordFieldSelector=%s --loginSubmitButtonSelector=%s --pageNavigationTimeout=%s --screenshotWidth=%s --screenshotHeight=%s',
+            escapeshellarg($screenSnapScriptPath),
             escapeshellarg($url),
             escapeshellarg($stepsToReproduce),
             escapeshellarg($fileName),
@@ -171,12 +178,20 @@ class ScreenSnapCommand extends Command
         $screenshotWidth,
         $screenshotHeight
     ): void {
+        $screenSnapScriptPath = null;
+        try {
+            $screenSnapScriptPath = $this->getScreenSnapScriptPath();
+        } catch (Exception $e) {
+            echo 'Error: ' . $e->getMessage();
+        }
+
         // Ensure that JSON is properly encoded for command-line execution
         $encodedData = json_encode($urlsToCapture);
 
         // Prepare the Node.js command with or without the savePath
         $command = sprintf(
-            'node ../../assets/js/screen-snap-script.js --data=%s --savePath=%s --loginUrl=%s --loginUsername=%s --loginPassword=%s --loginUsernameFieldSelector=%s --loginPasswordFieldSelector=%s --loginSubmitButtonSelector=%s --pageNavigationTimeout=%s --screenshotWidth=%s --screenshotHeight=%s',
+            'node %s --data=%s --savePath=%s --loginUrl=%s --loginUsername=%s --loginPassword=%s --loginUsernameFieldSelector=%s --loginPasswordFieldSelector=%s --loginSubmitButtonSelector=%s --pageNavigationTimeout=%s --screenshotWidth=%s --screenshotHeight=%s',
+            escapeshellarg($screenSnapScriptPath),
             escapeshellarg($encodedData),
             escapeshellarg($savePath),
             escapeshellarg($loginUrl),
@@ -272,5 +287,20 @@ class ScreenSnapCommand extends Command
                 throw new Exception("Input is neither a valid JSON string nor a file path.");
             }
         }
+    }
+
+    function getScreenSnapScriptPath(): string
+    {
+        // Get the full path to the JavaScript file
+        $scriptPath = base_path('vendor/belodigital/screen-snap/assets/js/screen-snap-script.js');
+
+        // Check if the file exists
+        if ($scriptPath && file_exists($scriptPath)) {
+            return $scriptPath; // Return the valid path
+        }
+
+        // If the file does not exist, throw an exception
+        throw new \Exception('ScreenSnap script file not found.');
+
     }
 }
