@@ -203,7 +203,7 @@ function verifyParameters() {
     }
 
     if (
-        loginCredentials.url &&
+        // loginCredentials.url &&
         loginCredentials.username &&
         loginCredentials.password &&
         loginFormFieldsSelectors.email &&
@@ -349,7 +349,7 @@ async function takeScreenshot(page, url, stepsToReproduce, fileName) {
         if (stepsToReproduce) {
             await reproduceSteps(page, stepsToReproduce);
         }
-        
+
         if (!fileName) {
             fileName = getDefaultFileName();
         }
