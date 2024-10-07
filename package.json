@@ -1,0 +1,6 @@
+{
+    "name": "screen-snap",
+    "dependencies": {
+        "puppeteer": "^19.0.0"
+    }
+}
