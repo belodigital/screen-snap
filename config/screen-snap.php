@@ -51,7 +51,7 @@ return [
     | Example: 'https://example.com/login'
     |
     */
-    'screensnap_login_url' => env('SCREENSNAP_LOGIN_URL', url('/login')),
+    'screensnap_login_url' => env('SCREENSNAP_LOGIN_URL', null),
 
     /*
     |--------------------------------------------------------------------------
