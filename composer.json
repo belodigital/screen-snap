@@ -1,7 +1,7 @@
 {
     "name": "belodigital/screen-snap",
     "description": "This package provides a laravel command to take screenshots of webpages automatically",
-    "version": "0.10.0",
+    "version": "0.10.1",
     "keywords": [
         "screen-snap",
         "laravel",
