@@ -342,11 +342,11 @@ async function takeScreenshot(page, url, stepsToReproduce, fileName) {
             await reproduceSteps(page, stepsToReproduce);
         }
 
-        getUniqueFileName(fileName);
+        let uniqueFileName = getUniqueFileName(savePath, fileName);
 
         // Capture screenshot
         await page.screenshot({
-            path: path.join(savePath, fileName),
+            path: path.join(savePath, uniqueFileName),
             fullPage: true,
         });
     } catch (error) {
@@ -526,7 +526,7 @@ function getFormatedDateTimeForDefaultFileName() {
  * before checking again. This process continues until a unique file name is found,
  * and then the full path to the unique file is returned.
  */
-function getUniqueFileName(fileName) {
+function getUniqueFileName(directory, fileName) {
     // If no filename is provided, generate a default one
     if (!fileName) {
         fileName = getDefaultFileName();
@@ -545,9 +545,9 @@ function getUniqueFileName(fileName) {
         newFileName = `${baseName}_${counter}${ext}`;
         counter++;
     }
-
+    
     // Return the full path to the unique file
-    return path.join(directory, dirName, newFileName);
+    return path.join(dirName, newFileName);
 }
 
 /* ------------------------ */
