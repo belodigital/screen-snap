@@ -64,7 +64,13 @@
         "analyse": "vendor/bin/phpstan analyse",
         "test": "vendor/bin/pest",
         "test-coverage": "vendor/bin/pest --coverage",
-        "format": "vendor/bin/pint"
+        "format": "vendor/bin/pint",
+        "post-install-cmd": [
+            "npm install"
+        ],
+        "post-update-cmd": [
+            "npm install"
+        ]
     },
     "config": {
         "sort-packages": true,
