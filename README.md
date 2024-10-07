@@ -13,7 +13,6 @@ Install ScreenSnap package by running the following commands in your Laravel pro
 
 ```bash
 composer require belodigital/screen-snap
-php artisan vendor:publish --tag="screen-snap-assets"
 ```
 
 You can publish the package configuration file with:
