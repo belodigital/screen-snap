@@ -267,9 +267,23 @@ The `urls.json` file should be structured as follows:
 ]
 ```
 
+When passing JSON data directly, it should be provided as a string.
+
+```bash
+php artisan screen-snap:take --data='[
+    {
+      "url": "https://orion.managewp.com/",
+      "fileName": "page1.png"
+    },
+    {
+      "url": "https://example.com/page2"
+    }
+  ]'
+```
+
 The command captures screenshots of multiple URLs provided in the JSON file. Each page can include optional steps to reproduce before capturing the screenshot.
 
-#### 4. Capturing Screenshots with Login
+#### 4. Capturing Screenshots with Custom Login Credentials
 
 If the page requires authentication, you can specify login credentials and form field selectors:
 
