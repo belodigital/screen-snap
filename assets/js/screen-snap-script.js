@@ -349,12 +349,14 @@ async function takeScreenshot(page, url, stepsToReproduce, fileName) {
         if (stepsToReproduce) {
             await reproduceSteps(page, stepsToReproduce);
         }
-
-        let uniqueFileName = getUniqueFileName(savePath, fileName);
+        
+        if (!fileName) {
+            fileName = getDefaultFileName();
+        }
 
         // Capture screenshot
         await page.screenshot({
-            path: path.join(savePath, uniqueFileName),
+            path: path.join(savePath, fileName),
             fullPage: true,
         });
     } catch (error) {
@@ -526,43 +528,6 @@ function getFormatedDateTimeForDefaultFileName() {
         "-" +
         date.getSeconds()
     );
-}
-
-/**
- * The function `getUniqueFileName` generates a unique file name by appending a
- * counter to the base file name if a file with the same name already exists in the
- * specified directory.
- * @param fileName - The `fileName` parameter is the name of the file for which you
- * want to generate a unique filename. If no `fileName` is provided, a default
- * filename will be generated based on the current date and time.
- * @returns The function `getUniqueFileName` returns the full path to a unique file
- * by checking if the provided file name already exists in the specified directory.
- * If the file exists, it increments a counter and appends it to the base file name
- * before checking again. This process continues until a unique file name is found,
- * and then the full path to the unique file is returned.
- */
-function getUniqueFileName(directory, fileName) {
-    // If no filename is provided, generate a default one
-    if (!fileName) {
-        fileName = getDefaultFileName();
-    }
-
-    // Extract directory, base name, and extension
-    let dirName = path.dirname(fileName); // Get the directory from the provided fileName
-    let baseName = path.basename(fileName, path.extname(fileName)); // Extract base file name without extension
-    let ext = path.extname(fileName); // Extract the file extension
-
-    let newFileName = fileName;
-    let counter = 1;
-
-    // Check if the file already exists, if so, increment the filename
-    while (fs.existsSync(path.join(directory, dirName, newFileName))) {
-        newFileName = `${baseName}_${counter}${ext}`;
-        counter++;
-    }
-
-    // Return the full path to the unique file
-    return path.join(dirName, newFileName);
 }
 
 /* ------------------------ */
