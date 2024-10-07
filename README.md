@@ -134,7 +134,7 @@ The **Screen Snap** package provides a command to automate the process of captur
 php artisan screen-snap:take
     --savePath= : Optional path to save the screenshots. If not provided, the configuration default path will be used
     --url= : URL to capture the screenshot, when capturing a single one
-    --fileName= : Name of the file where the screenshot will be saved, when capturing a single one
+    --fileName= : Name of the file where the screenshot will be saved, when capturing a single one. If a file with the same name already exists, it will be replaced
     --stepsToReproduce= : JSON formatted string of steps to reproduce before taking the screenshot, when capturing a single one
     --data= : JSON data or file path for batch screenshot capture
     --loginUsername= : Username for login
@@ -153,7 +153,7 @@ php artisan screen-snap:take
 
 - `--url=`: (Single mode) The URL of the page to capture a screenshot from. This option enables single screenshot mode.
 
-- `--fileName=`: (Single mode) The name of the file to save the screenshot. Must be used with `--url`.
+- `--fileName=`: (Single mode) The name of the file to save the screenshot. Must be used with `--url`. If a file with the same name already exists, it will be replaced.
 
 - `--stepsToReproduce=`: (Single mode) A JSON string that describes steps to perform on the page before capturing the screenshot (e.g., clicks, filling forms). The available actions are:
 
