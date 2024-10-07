@@ -288,7 +288,7 @@ class ScreenSnapCommand extends Command
     function getScreenSnapScriptPath(): string
     {
         // Get the full path to the JavaScript file
-        $scriptPath = base_path('vendor/belodigital/screen-snap/assets/js/screen-snap-script.min.js');
+        $scriptPath = base_path('vendor/belodigital/screen-snap/assets/js/screen-snap-script.js');
 
         // Check if the file exists
         if ($scriptPath && file_exists($scriptPath)) {
