@@ -42,19 +42,6 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Login URL
-    |--------------------------------------------------------------------------
-    |
-    | This is the URL where the login process starts. It should point to the
-    | login page of the application being tested or captured. Make sure this
-    | URL is correct for your staging or production environment.
-    | Example: 'https://example.com/login'
-    |
-    */
-    'screensnap_login_url' => env('SCREENSNAP_LOGIN_URL', null),
-
-    /*
-    |--------------------------------------------------------------------------
     | Login Username
     |--------------------------------------------------------------------------
     |

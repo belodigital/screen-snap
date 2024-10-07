@@ -18,7 +18,6 @@ class ScreenSnapCommand extends Command
         {--fileName= : Name of the file where the screenshot will be saved, when capturing a single one}
         {--stepsToReproduce= : JSON formatted string of steps to reproduce before taking the screenshot, when capturing a single one}
         {--data= : JSON data or file path for batch screenshot capture}
-        {--loginUrl= : URL to the login page of the application}
         {--loginUsername= : Username for login}
         {--loginPassword= : Password for login}
         {--loginUsernameFieldSelector= : CSS selector for the username field}
@@ -27,6 +26,8 @@ class ScreenSnapCommand extends Command
         {--pageNavigationTimeout= : Optional timeout for page navigation}
         {--screenshotWidth= : Width of the screenshot}
         {--screenshotHeight= : Height of the screenshot}';
+
+    // {--loginUrl= : URL to the login page of the application} // Not needed for now
 
     /**
      * The console command description.
@@ -48,7 +49,7 @@ class ScreenSnapCommand extends Command
 
         $savePath = $this->option('savePath') ?? config('screen-snap.screensnap_save_path');
 
-        $loginUrl = $this->option('loginUrl') ?? config('screen-snap.screensnap_login_url');
+        // $loginUrl = $this->option('loginUrl') ?? config('screen-snap.screensnap_login_url'); // Not needed for now
         $loginUsername = $this->option('loginUsername') ?? config('screen-snap.screensnap_login_username');
         $loginPassword = $this->option('loginPassword') ?? config('screen-snap.screensnap_login_password');
         $loginUsernameFieldSelector = $this->option('loginUsernameFieldSelector') ?? config('screen-snap.screensnap_login_username_field_selector');
@@ -67,7 +68,6 @@ class ScreenSnapCommand extends Command
                 $stepsToReproduce,
                 $fileName,
                 $savePath,
-                $loginUrl,
                 $loginUsername,
                 $loginPassword,
                 $loginUsernameFieldSelector,
@@ -83,7 +83,8 @@ class ScreenSnapCommand extends Command
             try {
                 $jsonContent = $this->getJsonContent($data);
             } catch (Exception $e) {
-                echo 'Error: ' . $e->getMessage();
+                $this->error('Error: ' . $e->getMessage());
+                return self::FAILURE;
             }
 
             $this->verifySavePath($savePath);
@@ -91,7 +92,6 @@ class ScreenSnapCommand extends Command
             $this->takeBatchScreenshots(
                 $jsonContent,
                 $savePath,
-                $loginUrl,
                 $loginUsername,
                 $loginPassword,
                 $loginUsernameFieldSelector,
@@ -117,7 +117,6 @@ class ScreenSnapCommand extends Command
         $stepsToReproduce,
         $fileName,
         $savePath,
-        $loginUrl,
         $loginUsername,
         $loginPassword,
         $loginUsernameFieldSelector,
@@ -135,13 +134,12 @@ class ScreenSnapCommand extends Command
         }
 
         $command = sprintf(
-            'node %s --url=%s --stepsToReproduce=%s --fileName=%s --savePath=%s --loginUrl=%s --loginUsername=%s --loginPassword=%s --loginUsernameFieldSelector=%s --loginPasswordFieldSelector=%s --loginSubmitButtonSelector=%s --pageNavigationTimeout=%s --screenshotWidth=%s --screenshotHeight=%s',
+            'node %s --url=%s --stepsToReproduce=%s --fileName=%s --savePath=%s --loginUsername=%s --loginPassword=%s --loginUsernameFieldSelector=%s --loginPasswordFieldSelector=%s --loginSubmitButtonSelector=%s --pageNavigationTimeout=%s --screenshotWidth=%s --screenshotHeight=%s',
             escapeshellarg($screenSnapScriptPath),
             escapeshellarg($url),
             escapeshellarg($stepsToReproduce),
             escapeshellarg($fileName),
             escapeshellarg($savePath),
-            escapeshellarg($loginUrl),
             escapeshellarg($loginUsername),
             escapeshellarg($loginPassword),
             escapeshellarg($loginUsernameFieldSelector),
@@ -168,7 +166,6 @@ class ScreenSnapCommand extends Command
     private function takeBatchScreenshots(
         $urlsToCapture,
         $savePath,
-        $loginUrl,
         $loginUsername,
         $loginPassword,
         $loginUsernameFieldSelector,
@@ -190,11 +187,10 @@ class ScreenSnapCommand extends Command
 
         // Prepare the Node.js command with or without the savePath
         $command = sprintf(
-            'node %s --data=%s --savePath=%s --loginUrl=%s --loginUsername=%s --loginPassword=%s --loginUsernameFieldSelector=%s --loginPasswordFieldSelector=%s --loginSubmitButtonSelector=%s --pageNavigationTimeout=%s --screenshotWidth=%s --screenshotHeight=%s',
+            'node %s --data=%s --savePath=%s --loginUsername=%s --loginPassword=%s --loginUsernameFieldSelector=%s --loginPasswordFieldSelector=%s --loginSubmitButtonSelector=%s --pageNavigationTimeout=%s --screenshotWidth=%s --screenshotHeight=%s',
             escapeshellarg($screenSnapScriptPath),
             escapeshellarg($encodedData),
             escapeshellarg($savePath),
-            escapeshellarg($loginUrl),
             escapeshellarg($loginUsername),
             escapeshellarg($loginPassword),
             escapeshellarg($loginUsernameFieldSelector),
@@ -301,6 +297,5 @@ class ScreenSnapCommand extends Command
 
         // If the file does not exist, throw an exception
         throw new \Exception('ScreenSnap script file not found.');
-
     }
 }
