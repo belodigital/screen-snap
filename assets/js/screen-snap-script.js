@@ -16,7 +16,7 @@
 // Batch Mode:
 //   --data       : JSON array containing URLs and filenames for screenshots.
 //                 Example: '[{"url": "https://example.com/page1", "fileName": "page1.png"}, {"url": "https://example.com/page2", "fileName": "page2.png"}]'
-//                 
+//
 //                 Optionally, it can also have steps to reproduce before taking the screenshot : JSON array of steps to reproduce on the page before taking a screenshot.
 //                 Example: '[{"action": "click", "selector": "button"}, {"action": "fillField", "selector": "#input", "value": "text"}]'
 
@@ -101,7 +101,7 @@
 
 const puppeteer = require("puppeteer");
 const path = require("path");
-const fs = require('fs');
+const fs = require("fs");
 
 /* ------------------------ */
 /*    Default Configurations */
@@ -137,8 +137,8 @@ const loginFormFieldsSelectors = {
 // Screenshot settings and save path
 const pageNavigationTimeout =
     args.pageNavigationTimeout || defaultPageNavigationTimeout;
-const screenshotWidth = args.screenshotWidth || defaultScreenshotWidth;
-const screenshotHeight = args.screenshotHeight || defaultScreenshotHeight;
+var screenshotWidth = args.screenshotWidth || defaultScreenshotWidth;
+var screenshotHeight = args.screenshotHeight || defaultScreenshotHeight;
 const savePath = args.savePath;
 
 // Single screenshot parameters
@@ -191,6 +191,14 @@ function getArguments() {
 function verifyParameters() {
     if (!savePath) {
         console.error("Missing parameter: --savePath.");
+        process.exit(1);
+    }
+
+    screenshotWidth = parseInt(screenshotWidth);
+    screenshotHeight = parseInt(screenshotHeight);
+
+    if (isNaN(screenshotWidth) || isNaN(screenshotHeight)) {
+        console.error("Invalid screenshot dimensions.");
         process.exit(1);
     }
 
@@ -363,9 +371,11 @@ async function takeScreenshot(page, url, stepsToReproduce, fileName) {
  */
 async function handleSingleScreenshot() {
     let browser;
+
     try {
         browser = await puppeteer.launch({ headless: "new" });
         const page = await browser.newPage();
+
         await page.setViewport({
             width: screenshotWidth,
             height: screenshotHeight,
@@ -405,7 +415,12 @@ async function handleBatchScreenshots() {
         for (const item of data) {
             counter++;
             try {
-                await takeScreenshot(page, item.url, item.stepsToReproduce, item.fileName);
+                await takeScreenshot(
+                    page,
+                    item.url,
+                    item.stepsToReproduce,
+                    item.fileName
+                );
                 countSuccess++;
             } catch (error) {
                 countError++;
@@ -533,7 +548,7 @@ function getUniqueFileName(directory, fileName) {
     }
 
     // Extract directory, base name, and extension
-    let dirName = path.dirname(fileName);  // Get the directory from the provided fileName
+    let dirName = path.dirname(fileName); // Get the directory from the provided fileName
     let baseName = path.basename(fileName, path.extname(fileName)); // Extract base file name without extension
     let ext = path.extname(fileName); // Extract the file extension
 
@@ -545,7 +560,7 @@ function getUniqueFileName(directory, fileName) {
         newFileName = `${baseName}_${counter}${ext}`;
         counter++;
     }
-    
+
     // Return the full path to the unique file
     return path.join(dirName, newFileName);
 }
