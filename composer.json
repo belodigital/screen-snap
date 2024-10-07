@@ -1,7 +1,7 @@
 {
     "name": "belodigital/screen-snap",
     "description": "This is my package screen-snap",
-    "version": "0.8.0",
+    "version": "0.9.0",
     "keywords": [
         "screen-snap",
         "laravel",
