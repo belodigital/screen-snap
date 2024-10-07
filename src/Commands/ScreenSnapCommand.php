@@ -210,12 +210,36 @@ class ScreenSnapCommand extends Command
     {
         if (!is_dir($savePath)) {
             $this->error("The save path does not exist: $savePath");
-            exit(1);
+
+            // Ask the user if they want to create the directory
+            if ($this->confirm("Do you want to create the save path?")) {
+                // Attempt to create the directory
+                if (mkdir($savePath, 0755, true)) {
+                    $this->info("The save path has been created: $savePath");
+                } else {
+                    $this->error("Failed to create the save path.");
+                    exit(1);
+                }
+            } else {
+                exit(1); // Exit if user does not want to create the directory
+            }
         }
 
         if (!is_writable($savePath)) {
             $this->error("The save path is not writable: $savePath");
-            exit(1);
+
+            // Ask the user if they want to make the directory writable
+            if ($this->confirm("Do you want to make the save path writable?")) {
+                // Attempt to change the permissions
+                if (chmod($savePath, 0755)) {
+                    $this->info("The save path is now writable: $savePath");
+                } else {
+                    $this->error("Failed to make the save path writable.");
+                    exit(1);
+                }
+            } else {
+                exit(1); // Exit if user does not want to change permissions
+            }
         }
     }
 
