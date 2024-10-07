@@ -566,7 +566,7 @@ function getUniqueFileName(directory, fileName) {
 }
 
 /* ------------------------ */
-/*    Main Execution         */
+/*    Main Execution        */
 /* ------------------------ */
 
 /**
