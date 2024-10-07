@@ -59,9 +59,9 @@ class ScreenSnapCommand extends Command
         $screenshotWidth = $this->option('screenshotWidth') ?? null;
         $screenshotHeight = $this->option('screenshotHeight') ?? null;
 
-        $this->verifySavePath($savePath);
-
         if ($url) {
+            $this->verifySavePath($savePath);
+
             $this->takeSingleScreenshots(
                 $url,
                 $stepsToReproduce,
@@ -85,6 +85,8 @@ class ScreenSnapCommand extends Command
             } catch (Exception $e) {
                 echo 'Error: ' . $e->getMessage();
             }
+
+            $this->verifySavePath($savePath);
 
             $this->takeBatchScreenshots(
                 $jsonContent,
