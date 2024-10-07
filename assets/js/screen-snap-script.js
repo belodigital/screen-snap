@@ -101,6 +101,7 @@
 
 const puppeteer = require("puppeteer");
 const path = require("path");
+const { get } = require("http");
 
 /* ------------------------ */
 /*    Default Configurations */
@@ -303,10 +304,23 @@ async function reproduceSteps(page, stepsToReproduce) {
 }
 
 /**
- * Takes a screenshot of the specified URL, performing login if required.
- * @param {Object} page - Puppeteer Page object representing the current browser tab.
- * @param {String} url - The URL to navigate to for the screenshot.
- * @param {String} fileName - The file name to save the screenshot as.
+ * The function `takeScreenshot` navigates to a specified URL, performs login if
+ * required, reproduces specified steps, generates a unique file name, and captures
+ * a full-page screenshot.
+ * @param page - The `page` parameter in the `takeScreenshot` function is typically
+ * an instance of a Puppeteer `Page` object. This object represents a single tab or
+ * window in the browser and provides methods to interact with the page, navigate,
+ * and capture screenshots.
+ * @param url - The `url` parameter in the `takeScreenshot` function is the URL of
+ * the webpage from which you want to capture a screenshot.
+ * @param stepsToReproduce - The `stepsToReproduce` parameter in the
+ * `takeScreenshot` function is used to provide a set of steps that can be
+ * reproduced on the webpage before taking the screenshot. These steps typically
+ * include interactions or actions that need to be performed on the page to reach a
+ * specific state or view that needs to
+ * @param fileName - The `fileName` parameter in the `takeScreenshot` function is
+ * the name you want to give to the screenshot file that will be saved. It is the
+ * name under which the screenshot will be stored in the specified `savePath`.
  */
 async function takeScreenshot(page, url, stepsToReproduce, fileName) {
     try {
@@ -328,9 +342,7 @@ async function takeScreenshot(page, url, stepsToReproduce, fileName) {
             await reproduceSteps(page, stepsToReproduce);
         }
 
-        if(!fileName) {
-            fileName = "screenshot" + getRandomInt(1, 10) + ".png";
-        }
+        getUniqueFileName(fileName);
 
         // Capture screenshot
         await page.screenshot({
@@ -340,23 +352,6 @@ async function takeScreenshot(page, url, stepsToReproduce, fileName) {
     } catch (error) {
         throw "Error taking screenshot '" + fileName + "': " + error.message;
     }
-}
-
-/* ------------------------ */
-/*      Aux Functions       */
-/* ------------------------ */
-
-/**
- * The getRandomInt function generates a random integer within a specified range.
- * @param min - The `min` parameter represents the minimum value of the range from
- * which you want to generate a random integer.
- * @param max - The `max` parameter in the `getRandomInt` function represents the
- * maximum value that you want the random integer to be generated within.
- * @returns The function getRandomInt(min, max) returns a random integer between
- * the specified minimum (min) and maximum (max) values.
- */
-function getRandomInt(min, max) {
-    return Math.floor(Math.random() * (max - min)) + min;
 }
 
 /* ------------------------ */
@@ -477,6 +472,82 @@ function progressBar(completed, total) {
         // Fallback for environments without clearLine/cursorTo support
         console.error(completeBar);
     }
+}
+
+/* ------------------------ */
+/*      Aux Functions       */
+/* ------------------------ */
+
+/**
+ * The function getDefaultFileName() returns a default file name for a screenshot
+ * in the format "screenshot_[current date and time].png".
+ * @returns The function `getDefaultFileName()` returns a string that consists of
+ * "screenshot_" followed by the formatted date and time obtained from the function
+ * `getFormatedDateTimeForDefaultFileName()`, and ending with the file extension
+ * ".png".
+ */
+function getDefaultFileName() {
+    return "screenshot_" + getFormatedDateTimeForDefaultFileName() + ".png";
+}
+
+/**
+ * The function `getFormatedDateTimeForDefaultFileName` returns the current date
+ * and time in a specific format suitable for a default file name.
+ * @returns The function `getFormatedDateTimeForDefaultFileName` returns a string
+ * in the format "YYYY-MM-DD_HH-MM-SS", representing the current date and time.
+ */
+function getFormatedDateTimeForDefaultFileName() {
+    var date = new Date();
+    return (
+        date.getFullYear() +
+        "-" +
+        (date.getMonth() + 1) +
+        "-" +
+        date.getDate() +
+        "_" +
+        date.getHours() +
+        "-" +
+        date.getMinutes() +
+        "-" +
+        date.getSeconds()
+    );
+}
+
+/**
+ * The function `getUniqueFileName` generates a unique file name by appending a
+ * counter to the base file name if a file with the same name already exists in the
+ * specified directory.
+ * @param fileName - The `fileName` parameter is the name of the file for which you
+ * want to generate a unique filename. If no `fileName` is provided, a default
+ * filename will be generated based on the current date and time.
+ * @returns The function `getUniqueFileName` returns the full path to a unique file
+ * by checking if the provided file name already exists in the specified directory.
+ * If the file exists, it increments a counter and appends it to the base file name
+ * before checking again. This process continues until a unique file name is found,
+ * and then the full path to the unique file is returned.
+ */
+function getUniqueFileName(fileName) {
+    // If no filename is provided, generate a default one
+    if (!fileName) {
+        fileName = getDefaultFileName();
+    }
+
+    // Extract directory, base name, and extension
+    let dirName = path.dirname(fileName);  // Get the directory from the provided fileName
+    let baseName = path.basename(fileName, path.extname(fileName)); // Extract base file name without extension
+    let ext = path.extname(fileName); // Extract the file extension
+
+    let newFileName = fileName;
+    let counter = 1;
+
+    // Check if the file already exists, if so, increment the filename
+    while (fs.existsSync(path.join(directory, dirName, newFileName))) {
+        newFileName = `${baseName}_${counter}${ext}`;
+        counter++;
+    }
+
+    // Return the full path to the unique file
+    return path.join(directory, dirName, newFileName);
 }
 
 /* ------------------------ */
