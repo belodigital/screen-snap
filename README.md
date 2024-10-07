@@ -5,7 +5,7 @@
 [![GitHub Code Style Action Status](https://img.shields.io/github/actions/workflow/status/belodigital/screen-snap/fix-php-code-style-issues.yml?branch=main&label=code%20style&style=flat-square)](https://github.com/belodigital/screen-snap/actions?query=workflow%3A"Fix+PHP+code+style+issues"+branch%3Amain)
 [![Total Downloads](https://img.shields.io/packagist/dt/belodigital/screen-snap.svg?style=flat-square)](https://packagist.org/packages/belodigital/screen-snap)
 
-This is where your description should go. Limit it to a paragraph or two. Consider adding a small example.
+This package provides a laravel command to take screenshots of webpages automatically.
 
 ## Installation
 
