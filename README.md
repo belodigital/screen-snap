@@ -281,7 +281,7 @@ The page at https://example.com/login is loaded.
 The username and password are entered in the respective fields (#email and #password), and the login form is submitted using the button with the selector #submit.
 After login, a screenshot of https://example.com/dashboard is captured and saved as dashboard.png.
 
-#### 5. Capturing Screenshots with Login
+#### 5. Capturing Screenshots with Custom Dimensions
 
 To set custom dimensions for the screenshot, use the --screenshotWidth and --screenshotHeight options:
 
