@@ -10,8 +10,8 @@ return [
    |--------------------------------------------------------------------------
    |
    | These values are used for configuring the behavior of screenshots
-   | taken by ScreenSnap. The save path, login URL, credentials,
-   | and form selectors are configurable here.
+   | taken by ScreenSnap. The save path, credentials, and form selectors
+   | are configurable here.
    |
    */
 
