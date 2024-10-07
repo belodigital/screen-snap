@@ -101,7 +101,7 @@
 
 const puppeteer = require("puppeteer");
 const path = require("path");
-const { get } = require("http");
+const fs = require('fs');
 
 /* ------------------------ */
 /*    Default Configurations */
