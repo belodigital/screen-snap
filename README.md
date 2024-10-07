@@ -33,8 +33,8 @@ return [
    |--------------------------------------------------------------------------
    |
    | These values are used for configuring the behavior of screenshots
-   | taken by ScreenSnap. The save path, login URL, credentials,
-   | and form selectors are configurable here.
+   | taken by ScreenSnap. The save path, credentials, and form selectors
+   | are configurable here.
    |
    */
 
@@ -62,19 +62,6 @@ return [
     |
     */
     'screensnap_data_file' => env('SCREENSNAP_DATA_FILE', null),
-
-    /*
-    |--------------------------------------------------------------------------
-    | Login URL
-    |--------------------------------------------------------------------------
-    |
-    | This is the URL where the login process starts. It should point to the
-    | login page of the application being tested or captured. Make sure this
-    | URL is correct for your staging or production environment.
-    | Example: 'https://example.com/login'
-    |
-    */
-    'screensnap_login_url' => env('SCREENSNAP_LOGIN_URL', null),
 
     /*
     |--------------------------------------------------------------------------
@@ -151,7 +138,6 @@ php artisan screen-snap:take
     --fileName= : Name of the file where the screenshot will be saved, when capturing a single one
     --stepsToReproduce= : JSON formatted string of steps to reproduce before taking the screenshot, when capturing a single one
     --data= : JSON data or file path for batch screenshot capture
-    --loginUrl= : URL to the login page of the application
     --loginUsername= : Username for login
     --loginPassword= : Password for login
     --loginUsernameFieldSelector= : CSS selector for the username field
@@ -202,8 +188,6 @@ php artisan screen-snap:take
   In this example, it first clicks the #login-button and then fills the #email input field with the value "user@example.com".
 
 - `--data=`: (Batch mode) The path to a JSON file or a raw JSON string that contains multiple URLs to capture screenshots from.
-
-- `--loginUrl=`: URL to the login page of the application, if authentication is required before capturing screenshots.
 
 - `--loginUsername=`: The username to use for logging in to the application.
 
@@ -288,7 +272,7 @@ The command captures screenshots of multiple URLs provided in the JSON file. Eac
 If the page requires authentication, you can specify login credentials and form field selectors:
 
 ```bash
-php artisan screen-snap:take --url=https://example.com/dashboard --fileName=dashboard.png --loginUrl=https://example.com/login --loginUsername=admin --loginPassword=admin123 --loginUsernameFieldSelector="#email" --loginPasswordFieldSelector="#password" --loginSubmitButtonSelector="#submit"
+php artisan screen-snap:take --url=https://example.com/dashboard --fileName=dashboard.png --loginUsername=admin --loginPassword=admin123 --loginUsernameFieldSelector="#email" --loginPasswordFieldSelector="#password" --loginSubmitButtonSelector="#submit"
 ```
 
 The page at https://example.com/login is loaded.
