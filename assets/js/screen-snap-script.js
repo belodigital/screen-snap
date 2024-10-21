@@ -294,7 +294,7 @@ async function reproduceSteps(page, stepsToReproduce) {
                     await page.type(step.selector, step.value);
                     break;
                 case "wait":
-                    await page.waitForTimeout(step.value);
+                    await sleep(step.value);
                     break;
                 default:
                     throw (
@@ -526,6 +526,20 @@ function getFormatedDateTimeForDefaultFileName() {
         "-" +
         date.getSeconds()
     );
+}
+
+/**
+ * The function `sleep` returns a promise that resolves after a specified number of
+ * milliseconds.
+ * @param ms - The `ms` parameter in the `sleep` function represents the number of
+ * milliseconds for which the function will pause execution before resolving the
+ * promise.
+ * @returns The function `sleep` is being returned. It is a function that takes a
+ * parameter `ms` (representing milliseconds) and returns a Promise that resolves
+ * after the specified number of milliseconds using `setTimeout`.
+ */
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
 }
 
 /* ------------------------ */
