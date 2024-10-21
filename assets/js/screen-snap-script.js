@@ -18,7 +18,7 @@
 //                 Example: '[{"url": "https://example.com/page1", "fileName": "page1.png"}, {"url": "https://example.com/page2", "fileName": "page2.png"}]'
 //
 //                 Optionally, it can also have steps to reproduce before taking the screenshot : JSON array of steps to reproduce on the page before taking a screenshot.
-//                 Example: '[{"action": "click", "selector": "button"}, {"action": "fillField", "selector": "#input", "value": "text"}]'
+//                 Example: '[{"action": "click", "selector": "button"}, {"action": "fillField", "selector": "#input", "value": "text"}, {"action": "wait", "value": "1000"}]'
 
 // OR
 
@@ -26,16 +26,16 @@
 //   --url        : The URL of the page to capture.
 //   --fileName   : The name of the file to save the screenshot as (e.g., "page.png").
 //   [Optional] --stepsToReproduce : JSON array of steps to reproduce on the page before taking a screenshot.
-//                                  Example: '[{"action": "click", "selector": "button"}, {"action": "fillField", "selector": "#input", "value": "text"}]'
+//                                  Example: '[{"action": "click", "selector": "button"}, {"action": "fillField", "selector": "#input", "value": "text"}, {"action": "wait", "value": "1000"}]'
 
 /* ----------------------------- */
-/*       Optional Parameters      */
+/*       Optional Parameters     */
 /* ----------------------------- */
 // Save Directory:
 //   --savePath   : Custom directory to save screenshots (e.g., "./screenshots"). Defaults to current directory if not provided.
 
 /* ----------------------------- */
-/*       Login Parameters         */
+/*       Login Parameters        */
 /* ----------------------------- */
 // If login is required before capturing a screenshot, provide the following:
 //   --loginUrl                     : The URL of the login page.
@@ -286,17 +286,15 @@ async function isLoginRequired(page) {
 async function reproduceSteps(page, stepsToReproduce) {
     try {
         for (const step of stepsToReproduce) {
-            // await page.waitForSelector(step.selector);
-            const element = await page.waitForSelector(step.selector);
-
             switch (step.action) {
                 case "click":
-                    // await page.click(step.selector);
-                    await element.click();
+                    await page.click(step.selector);
                     break;
                 case "fillField":
-                    // await page.type(step.selector, step.value);
-                    await element.type(step.value);
+                    await page.type(step.selector, step.value);
+                    break;
+                case "wait":
+                    await page.waitForTimeout(step.value);
                     break;
                 default:
                     throw (
