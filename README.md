@@ -176,12 +176,20 @@ php artisan screen-snap:take
 
   This example fills the input field with the CSS selector #email with the value "user@example.com".
 
+  #### Example for wait:
+
+  ```json
+    [{"action": "wait", "value": "1000"}]
+  ```
+
+  This example instructs the script to pause its execution for a specified amount of time in milliseconds.
+
   #### Example with multiple actions:
 
   You can chain multiple actions together. For example, clicking a button and then filling a field:
 
   ```json
-    [{"selector": "#login-button", "action": "click"}, {"selector": "#email", "action": "fillField", "value": "user@example.com"}]
+    [{"selector": "#login-button", "action": "click"}, {"selector": "#email", "action": "fillField", "value": "user@example.com"}, {"action": "wait", "value": "1000"}]
   ```
 
   In this example, it first clicks the #login-button and then fills the #email input field with the value "user@example.com".
