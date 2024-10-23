@@ -250,15 +250,10 @@ async function login(page) {
         );
 
         // Submit the form and wait for navigation
-        const [response] = await Promise.all([
+        await Promise.all([
             page.click(loginFormFieldsSelectors.submitButton),
-            page.waitForNavigation({ waitUntil: "networkidle2", timeout: 5000 }).catch(() => null), // Catch if no navigation
+            page.waitForNavigation({ waitUntil: "networkidle2", timeout: pageNavigationTimeout }).catch(() => null),
         ]);
-
-        // Check if navigation happened
-        if (!response) {
-            console.error("Login failed, no navigation occurred. Proceeding...");
-        }
     } catch (error) {
         throw "Error logging in: " + error.message || error;
     }
