@@ -228,7 +228,7 @@ function parseJson(json) {
     try {
         return JSON.parse(json);
     } catch (error) {
-        console.error("Error parsing JSON:", error.message);
+        console.error("Error parsing JSON:", error.message || error);
         process.exit(1); // Exit if invalid JSON is provided
     }
 }
@@ -250,12 +250,17 @@ async function login(page) {
         );
 
         // Submit the form and wait for navigation
-        await Promise.all([
+        const [response] = await Promise.all([
             page.click(loginFormFieldsSelectors.submitButton),
-            page.waitForNavigation({ waitUntil: "networkidle2", timeout: 5000 }),
+            page.waitForNavigation({ waitUntil: "networkidle2", timeout: 5000 }).catch(() => null), // Catch if no navigation
         ]);
+
+        // Check if navigation happened
+        if (!response) {
+            console.error("Login failed, no navigation occurred. Proceeding...");
+        }
     } catch (error) {
-        throw "Error logging in: " + error.message;
+        throw "Error logging in: " + error.message || error;
     }
 }
 
@@ -271,7 +276,7 @@ async function isLoginRequired(page) {
             && (await page.$(loginFormFieldsSelectors.password)) !== null
             && (await page.$(loginFormFieldsSelectors.submitButton)) !== null);
     } catch (error) {
-        throw "Error checking login page: " + error.message;
+        throw "Error checking login page: " + error.message || error;
     }
 }
 
@@ -360,7 +365,7 @@ async function takeScreenshot(page, url, stepsToReproduce, fileName) {
             fullPage: true,
         });
     } catch (error) {
-        throw "Error taking screenshot '" + fileName + "': " + error.message;
+        throw "Error taking screenshot '" + fileName + "': " + error.message || error;
     }
 }
 
@@ -437,7 +442,7 @@ async function handleBatchScreenshots() {
             progressBar(counter, data.length);
         }
     } catch (error) {
-        console.log("Batch process failed:", error.message);
+        console.log("Batch process failed:", error.message || error);
     } finally {
         if (browser) {
             await browser.close();
