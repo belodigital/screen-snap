@@ -252,7 +252,7 @@ async function login(page) {
         // Submit the form and wait for navigation
         await Promise.all([
             page.click(loginFormFieldsSelectors.submitButton),
-            page.waitForNavigation({ waitUntil: "networkidle2" }),
+            page.waitForNavigation({ waitUntil: "networkidle2", timeout: 5000 }),
         ]);
     } catch (error) {
         throw "Error logging in: " + error.message;
@@ -267,7 +267,9 @@ async function login(page) {
 async function isLoginRequired(page) {
     try {
         // Check if the login form's email input exists on the page
-        return (await page.$(loginFormFieldsSelectors.email)) !== null;
+        return ((await page.$(loginFormFieldsSelectors.email)) !== null
+            && (await page.$(loginFormFieldsSelectors.password)) !== null
+            && (await page.$(loginFormFieldsSelectors.submitButton)) !== null);
     } catch (error) {
         throw "Error checking login page: " + error.message;
     }
