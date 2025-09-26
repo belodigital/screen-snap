@@ -318,7 +318,7 @@ Please review [our security policy](../../security/policy) on how to report secu
 
 ## Credits
 
-- [dcruz-belodigital](https://github.com/dcruz)
+- [dcruz-belodigital](https://github.com/dcruz-belodigital)
 - [All Contributors](../../contributors)
 
 ## License
