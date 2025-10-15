@@ -21,7 +21,7 @@ You can publish the package configuration file with:
 php artisan vendor:publish --tag="screen-snap-config"
 ```
 
-This is the contents of the published configuration file:
+These are the contents of the published configuration file:
 
 ```php
 return [
