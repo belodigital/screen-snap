@@ -13,19 +13,19 @@ class ScreenSnapCommand extends Command
      * @var string
      */
     protected $signature = 'screen-snap:take
-        {--savePath= : Optional path to save the screenshots. If not provided, the configuration default path will be used}
+        {--save-path= : Optional path to save the screenshots. If not provided, the configuration default path will be used}
         {--url= : URL to capture the screenshot, when capturing a single one}
-        {--fileName= : Name of the file where the screenshot will be saved, when capturing a single one}
-        {--stepsToReproduce= : JSON formatted string of steps to reproduce before taking the screenshot, when capturing a single one}
+        {--file-name= : Name of the file where the screenshot will be saved, when capturing a single one}
+        {--steps-to-reproduce= : JSON formatted string of steps to reproduce before taking the screenshot, when capturing a single one}
         {--data= : JSON data or file path for batch screenshot capture}
-        {--loginUsername= : Username for login}
-        {--loginPassword= : Password for login}
-        {--loginUsernameFieldSelector= : CSS selector for the username field}
-        {--loginPasswordFieldSelector= : CSS selector for the password field}
-        {--loginSubmitButtonSelector= : CSS selector for the login submit button}
-        {--pageNavigationTimeout= : Optional timeout for page navigation}
-        {--screenshotWidth= : Width of the screenshot}
-        {--screenshotHeight= : Height of the screenshot}';
+        {--login-username= : Username for login}
+        {--login-password= : Password for login}
+        {--login-username-field-selector= : CSS selector for the username field}
+        {--login-password-field-selector= : CSS selector for the password field}
+        {--login-submit-button-selector= : CSS selector for the login submit button}
+        {--page-navigation-timeout= : Optional timeout for page navigation}
+        {--screenshot-width= : Width of the screenshot}
+        {--screenshot-height= : Height of the screenshot}';
 
     // {--loginUrl= : URL to the login page of the application} // Not needed for now
 
@@ -134,7 +134,7 @@ class ScreenSnapCommand extends Command
         }
 
         $command = sprintf(
-            'node %s --url=%s --stepsToReproduce=%s --fileName=%s --savePath=%s --loginUsername=%s --loginPassword=%s --loginUsernameFieldSelector=%s --loginPasswordFieldSelector=%s --loginSubmitButtonSelector=%s --pageNavigationTimeout=%s --screenshotWidth=%s --screenshotHeight=%s',
+            'node %s --url=%s --steps-to-reproduce=%s --file-name=%s --save-path=%s --login-username=%s --login-password=%s --login-username-field-selector=%s --login-password-field-selector=%s --login-submit-button-selector=%s --page-navigation-timeout=%s --screenshot-width=%s --screenshot-height=%s',
             escapeshellarg($screenSnapScriptPath),
             escapeshellarg($url),
             escapeshellarg($stepsToReproduce),
@@ -187,7 +187,7 @@ class ScreenSnapCommand extends Command
 
         // Prepare the Node.js command with or without the savePath
         $command = sprintf(
-            'node %s --data=%s --savePath=%s --loginUsername=%s --loginPassword=%s --loginUsernameFieldSelector=%s --loginPasswordFieldSelector=%s --loginSubmitButtonSelector=%s --pageNavigationTimeout=%s --screenshotWidth=%s --screenshotHeight=%s',
+            'node %s --data=%s --save-path=%s --login-username=%s --login-password=%s --login-username-field-selector=%s --login-password-field-selector=%s --login-submit-button-selector=%s --page-navigation-timeout=%s --screenshot-width=%s --screenshot-height=%s',
             escapeshellarg($screenSnapScriptPath),
             escapeshellarg($encodedData),
             escapeshellarg($savePath),

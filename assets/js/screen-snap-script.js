@@ -24,8 +24,8 @@
 
 // Single Screenshot Mode:
 //   --url        : The URL of the page to capture.
-//   --fileName   : The name of the file to save the screenshot as (e.g., "page.png").
-//   [Optional] --stepsToReproduce : JSON array of steps to reproduce on the page before taking a screenshot.
+//   --file-name   : The name of the file to save the screenshot as (e.g., "page.png").
+//   [Optional] --steps-to-reproduce : JSON array of steps to reproduce on the page before taking a screenshot.
 //                                  Example: '[{"action": "click", "selector": "button"}, {"action": "fillField", "selector": "#input", "value": "text"}, {"action": "wait", "value": "1000"}]'
 
 /* ----------------------------- */
@@ -39,21 +39,21 @@
 /* ----------------------------- */
 // If login is required before capturing a screenshot, provide the following:
 //   --loginUrl                     : The URL of the login page.
-//   --loginUsername                 : The username for login.
-//   --loginPassword                 : The password for login.
-//   --loginUsernameFieldSelector    : CSS selector for the username input field.
-//   --loginPasswordFieldSelector    : CSS selector for the password input field.
-//   --loginSubmitButtonSelector     : CSS selector for the submit button on the login form.
+//   --login-username                 : The username for login.
+//   --login-password                 : The password for login.
+//   --login-username-field-selector    : CSS selector for the username input field.
+//   --login-password-field-selector    : CSS selector for the password input field.
+//   --login-submit-button-selector     : CSS selector for the submit button on the login form.
 
 /* ----------------------------- */
 /*        Additional Options      */
 /* ----------------------------- */
 // Timeout for page navigation:
-//   --pageNavigationTimeout : Maximum time (in milliseconds) to wait for page navigation (default: 30000 ms).
+//   --page-navigation-timeout : Maximum time (in milliseconds) to wait for page navigation (default: 30000 ms).
 
 // Screenshot dimensions:
-//   --screenshotWidth       : Width of the screenshot (default: 1920 px).
-//   --screenshotHeight      : Height of the screenshot (default: 1080 px).
+//   --screenshot-width       : Width of the screenshot (default: 1920 px).
+//   --screenshot-height      : Height of the screenshot (default: 1080 px).
 
 /**************************************
  * Usage Instructions
@@ -61,10 +61,10 @@
 
  1. Single Screenshot Mode:
       Run:
-        node script.js --url="https://example.com/page" --fileName="page.png" --savePath="./screenshots"
+        node script.js --url="https://example.com/page" --file-name="page.png" --savePath="./screenshots"
       Required arguments:
         --url        : The URL of the page to capture.
-        --fileName   : The name of the file to save the screenshot (e.g., "page.png").
+        --file-name   : The name of the file to save the screenshot (e.g., "page.png").
       Optional argument:
         --savePath   : Directory to save the screenshot (default is the current directory).
 
@@ -78,19 +78,19 @@
 
  3. Login (if required for page access):
       Run:
-        node script.js --url="https://example.com/page" --fileName="page.png" --loginUrl="https://example.com/login" --loginUsername="user@example.com" --loginPassword="password123" --loginUsernameFieldSelector="#username" --loginPasswordFieldSelector="#password" --loginSubmitButtonSelector="#loginButton"
+        node script.js --url="https://example.com/page" --file-name="page.png" --loginUrl="https://example.com/login" --login-username="user@example.com" --login-password="password123" --login-username-field-selector="#username" --login-password-field-selector="#password" --login-submit-button-selector="#loginButton"
       Required arguments for login:
         --loginUrl                     : The URL of the login page.
-        --loginUsername                 : Username for login.
-        --loginPassword                 : Password for login.
-        --loginUsernameFieldSelector    : CSS selector for the username input field.
-        --loginPasswordFieldSelector    : CSS selector for the password input field.
-        --loginSubmitButtonSelector     : CSS selector for the submit button.
+        --login-username                 : Username for login.
+        --login-password                 : Password for login.
+        --login-username-field-selector    : CSS selector for the username input field.
+        --login-password-field-selector    : CSS selector for the password input field.
+        --login-submit-button-selector     : CSS selector for the submit button.
 
  4. Additional Optional Arguments:
-      --pageNavigationTimeout          : Timeout for page navigation in milliseconds (default: 30000 ms).
-      --screenshotWidth                : Width of the screenshot (default: 1920 px).
-      --screenshotHeight               : Height of the screenshot (default: 1080 px).
+      --page-navigation-timeout          : Timeout for page navigation in milliseconds (default: 30000 ms).
+      --screenshot-width                : Width of the screenshot (default: 1920 px).
+      --screenshot-height               : Height of the screenshot (default: 1080 px).
 
 
 /**************************************/
