@@ -27,7 +27,7 @@ class ScreenSnapCommand extends Command
         {--screenshot-width= : Width of the screenshot}
         {--screenshot-height= : Height of the screenshot}';
 
-    // {--loginUrl= : URL to the login page of the application} // Not needed for now
+    // {--login-url= : URL to the login page of the application} // Not needed for now
 
     /**
      * The console command description.

@@ -15,7 +15,7 @@
 /* ----------------------------- */
 // Batch Mode:
 //   --data       : JSON array containing URLs and filenames for screenshots.
-//                 Example: '[{"url": "https://example.com/page1", "fileName": "page1.png"}, {"url": "https://example.com/page2", "fileName": "page2.png"}]'
+//                 Example: '[{"url": "https://example.com/page1", "file-name": "page1.png"}, {"url": "https://example.com/page2", "file-name": "page2.png"}]'
 //
 //                 Optionally, it can also have steps to reproduce before taking the screenshot : JSON array of steps to reproduce on the page before taking a screenshot.
 //                 Example: '[{"action": "click", "selector": "button"}, {"action": "fillField", "selector": "#input", "value": "text"}, {"action": "wait", "value": "1000"}]'
@@ -32,13 +32,13 @@
 /*       Optional Parameters     */
 /* ----------------------------- */
 // Save Directory:
-//   --savePath   : Custom directory to save screenshots (e.g., "./screenshots"). Defaults to current directory if not provided.
+//   --save-path   : Custom directory to save screenshots (e.g., "./screenshots"). Defaults to current directory if not provided.
 
 /* ----------------------------- */
 /*       Login Parameters        */
 /* ----------------------------- */
 // If login is required before capturing a screenshot, provide the following:
-//   --loginUrl                     : The URL of the login page.
+//   --login-url                     : The URL of the login page.
 //   --login-username                 : The username for login.
 //   --login-password                 : The password for login.
 //   --login-username-field-selector    : CSS selector for the username input field.
@@ -61,26 +61,26 @@
 
  1. Single Screenshot Mode:
       Run:
-        node script.js --url="https://example.com/page" --file-name="page.png" --savePath="./screenshots"
+        node script.js --url="https://example.com/page" --file-name="page.png" --save-path="./screenshots"
       Required arguments:
         --url        : The URL of the page to capture.
         --file-name   : The name of the file to save the screenshot (e.g., "page.png").
       Optional argument:
-        --savePath   : Directory to save the screenshot (default is the current directory).
+        --save-path   : Directory to save the screenshot (default is the current directory).
 
  2. Batch Screenshot Mode:
       Run:
-        node script.js --data='[{"url": "https://example.com/page1", "fileName": "page1.png"}, {"url": "https://example.com/page2", "fileName": "page2.png"}]' --savePath="./screenshots"
+        node script.js --data='[{"url": "https://example.com/page1", "file-name": "page1.png"}, {"url": "https://example.com/page2", "file-name": "page2.png"}]' --save-path="./screenshots"
       Required argument:
         --data       : JSON array of URLs and filenames for batch screenshot processing.
       Optional argument:
-        --savePath   : Directory to save screenshots (default is the current directory).
+        --save-path   : Directory to save screenshots (default is the current directory).
 
  3. Login (if required for page access):
       Run:
-        node script.js --url="https://example.com/page" --file-name="page.png" --loginUrl="https://example.com/login" --login-username="user@example.com" --login-password="password123" --login-username-field-selector="#username" --login-password-field-selector="#password" --login-submit-button-selector="#loginButton"
+        node script.js --url="https://example.com/page" --file-name="page.png" --login-url="https://example.com/login" --login-username="user@example.com" --login-password="password123" --login-username-field-selector="#username" --login-password-field-selector="#password" --login-submit-button-selector="#loginButton"
       Required arguments for login:
-        --loginUrl                     : The URL of the login page.
+        --login-url                     : The URL of the login page.
         --login-username                 : Username for login.
         --login-password                 : Password for login.
         --login-username-field-selector    : CSS selector for the username input field.
@@ -122,31 +122,31 @@ const args = getArguments();
 
 // Login credentials
 const loginCredentials = {
-    url: args.loginUrl,
-    username: args.loginUsername,
-    password: args.loginPassword,
+    url: args["login-url"],
+    username: args["login-username"],
+    password: args["login-password"],
 };
 
 // Login form field selectors
 const loginFormFieldsSelectors = {
-    email: args.loginUsernameFieldSelector,
-    password: args.loginPasswordFieldSelector,
-    submitButton: args.loginSubmitButtonSelector,
+    email: args["login-username-field-selector"],
+    password: args["login-password-field-selector"],
+    submitButton: args["login-submit-button-selector"],
 };
 
 // Screenshot settings and save path
 const pageNavigationTimeout =
-    args.pageNavigationTimeout || defaultPageNavigationTimeout;
-var screenshotWidth = args.screenshotWidth || defaultScreenshotWidth;
-var screenshotHeight = args.screenshotHeight || defaultScreenshotHeight;
-const savePath = args.savePath;
+    args["page-navigation-timeout"] || defaultPageNavigationTimeout;
+var screenshotWidth = args["screenshot-width"] || defaultScreenshotWidth;
+var screenshotHeight = args["screenshot-height"] || defaultScreenshotHeight;
+const savePath = args["save-path"];
 
 // Single screenshot parameters
 const url = args.url;
-const fileName = args.fileName;
+const fileName = args["file-name"];
 var stepsToReproduce = null;
-if (args.stepsToReproduce) {
-    stepsToReproduce = parseJson(args.stepsToReproduce);
+if (args["steps-to-reproduce"]) {
+    stepsToReproduce = parseJson(args["steps-to-reproduce"]);
 }
 
 // Batch data parsing
@@ -190,7 +190,7 @@ function getArguments() {
  */
 function verifyParameters() {
     if (!savePath) {
-        console.error("Missing parameter: --savePath.");
+        console.error("Missing parameter: --save-path.");
         process.exit(1);
     }
 

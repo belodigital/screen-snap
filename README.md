@@ -132,7 +132,7 @@ The **Screen Snap** package provides a command to automate the process of captur
 
 ```bash
 php artisan screen-snap:take
-    --savePath= : Optional path to save the screenshots. If not provided, the configuration default path will be used
+    --save-path= : Optional path to save the screenshots. If not provided, the configuration default path will be used
     --url= : URL to capture the screenshot, when capturing a single one
     --file-name= : Name of the file where the screenshot will be saved, when capturing a single one. If a file with the same name already exists, it will be replaced
     --steps-to-reproduce= : JSON formatted string of steps to reproduce before taking the screenshot, when capturing a single one
@@ -149,7 +149,7 @@ php artisan screen-snap:take
 
 ### Command Options
 
-- `--savePath=`: Optional path where the screenshots will be saved. If not provided, the default path in the configuration file will be used.
+- `--save-path=`: Optional path where the screenshots will be saved. If not provided, the default path in the configuration file will be used.
 
 - `--url=`: (Single mode) The URL of the page to capture a screenshot from. This option enables single screenshot mode.
 
@@ -248,12 +248,12 @@ The `urls.json` file should be structured as follows:
 [
   {
     "url": "https://example.com/page1",
-    "fileName": "page1.png",
+    "file-name": "page1.png",
     "stepsToReproduce": [{"selector":"#button1", "action":"click"}]
   },
   {
     "url": "https://example.com/page2",
-    "fileName": "page2.png"
+    "file-name": "page2.png"
   }
 ]
 ```
@@ -264,7 +264,7 @@ When passing JSON data directly, it should be provided as a string.
 php artisan screen-snap:take --data='[
     {
       "url": "https://orion.managewp.com/",
-      "fileName": "page1.png"
+      "file-name": "page1.png"
     },
     {
       "url": "https://example.com/page2"
