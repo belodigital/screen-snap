@@ -42,23 +42,22 @@ class ScreenSnapCommand extends Command
     public function handle(): int
     {
         $url = $this->option('url') ?? null;
-        $fileName = $this->option('fileName') ?? null;
-        $stepsToReproduce = $this->option('stepsToReproduce') ?? null;
+        $fileName = $this->option('file-name') ?? null;
+        $stepsToReproduce = $this->option('steps-to-reproduce') ?? null;
 
         $data = $this->option('data') ?? config('screen-snap.screensnap_data_file');
 
-        $savePath = $this->option('savePath') ?? config('screen-snap.screensnap_save_path');
+        $savePath = $this->option('save-path') ?? config('screen-snap.screensnap_save_path');
+        // $loginUrl = $this->option('login-url') ?? config('screen-snap.screensnap_login_url'); // Not needed for now
+        $loginUsername = $this->option('login-username') ?? config('screen-snap.screensnap_login_username');
+        $loginPassword = $this->option('login-password') ?? config('screen-snap.screensnap_login_password');
+        $loginUsernameFieldSelector = $this->option('login-username-field-selector') ?? config('screen-snap.screensnap_login_username_field_selector');
+        $loginPasswordFieldSelector = $this->option('login-password-field-selector') ?? config('screen-snap.screensnap_login_password_field_selector');
+        $loginSubmitButtonSelector = $this->option('login-submit-button-selector') ?? config('screen-snap.screensnap_login_submit_button_selector');
 
-        // $loginUrl = $this->option('loginUrl') ?? config('screen-snap.screensnap_login_url'); // Not needed for now
-        $loginUsername = $this->option('loginUsername') ?? config('screen-snap.screensnap_login_username');
-        $loginPassword = $this->option('loginPassword') ?? config('screen-snap.screensnap_login_password');
-        $loginUsernameFieldSelector = $this->option('loginUsernameFieldSelector') ?? config('screen-snap.screensnap_login_username_field_selector');
-        $loginPasswordFieldSelector = $this->option('loginPasswordFieldSelector') ?? config('screen-snap.screensnap_login_password_field_selector');
-        $loginSubmitButtonSelector = $this->option('loginSubmitButtonSelector') ?? config('screen-snap.screensnap_login_submit_button_selector');
-
-        $pageNavigationTimeout = $this->option('pageNavigationTimeout') ?? null;
-        $screenshotWidth = $this->option('screenshotWidth') ?? null;
-        $screenshotHeight = $this->option('screenshotHeight') ?? null;
+        $pageNavigationTimeout = $this->option('page-navigation-timeout') ?? null;
+        $screenshotWidth = $this->option('screenshot-width') ?? null;
+        $screenshotHeight = $this->option('screenshot-height') ?? null;
 
         if ($url) {
             $this->verifySavePath($savePath);
